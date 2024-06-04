@@ -1,5 +1,5 @@
-## Instructions to setup and run project
-# Prerequisites 
+# Instructions to setup and run project
+## Prerequisites 
 npm install the following:
 - npm install (base dependencies)
 - cors (globally)
