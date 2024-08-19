@@ -27,10 +27,13 @@ function UserProfile({ user = null, onEditQuestion }) {
     if (user === null) {
       axios.get('http://localhost:8000/users/profile', { withCredentials: true })
         .then(response => {
-          const sortedQuestions = response.data.questions.sort((a, b) => new Date(b.ask_date_time) - new Date(a.ask_date_time));
-          const sortedAnswers = response.data.answers.sort((a, b) => new Date(b.ans_date_time) - new Date(a.ans_date_time));
+          const questions = Array.isArray(response.data.questions) ? response.data.questions : [];
+          const answers = Array.isArray(response.data.answers) ? response.data.answers : [];
+  
+          const sortedQuestions = questions.sort((a, b) => new Date(b.ask_date_time) - new Date(a.ask_date_time));
+          const sortedAnswers = answers.sort((a, b) => new Date(b.ans_date_time) - new Date(a.ans_date_time));
           setProfile({ ...response.data, questions: sortedQuestions, answers: sortedAnswers });
-        })
+          })
         .catch(error => {
           console.error('Error fetching user profile:', error);
           setErrors('Failed to load profile');
